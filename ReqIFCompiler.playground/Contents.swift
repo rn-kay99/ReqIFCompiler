@@ -1,5 +1,3 @@
-import UIKit
-
 enum Token{
     case ROOT //Nonterminal
     case CONTENT //Nonterminal
