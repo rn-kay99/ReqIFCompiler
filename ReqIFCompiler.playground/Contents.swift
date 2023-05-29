@@ -1,7 +1,5 @@
 import UIKit
 
-var greeting = "Hello, playground"
-
 enum Token{
     case ROOT //Nonterminal
     case CONTENT //Nonterminal
@@ -66,13 +64,13 @@ class Parser{
         if tokensAreEqual(e, lookahead){
             advance()
         }else{
-            print("Error in eat(): \(e) != \(lookahead)")
+            print("Syntaxerror in eat(): \(e) != \(lookahead)")
         }
         return ASTNode(value: e,children: [])
     }
-    func parse(){
-        let ast = S()
-        print(ast)
+    func parse() -> ASTNode{
+        // return AST from Startsymbol
+        return S()
     }
     
     // S -> <spec_object> CONTENT </spec_object>
@@ -84,7 +82,7 @@ class Parser{
             let child3 = eat(.SPEC_OBJECT("", false))
             return ASTNode(value: Token.ROOT,children: [child1, child2, child3])
         default:
-            print("Error in S()")
+            print("Syntaxerror in S()")
         }
         
         return ASTNode(value: Token.ERROR, children: [])
@@ -107,7 +105,7 @@ class Parser{
         case .SPEC_OBJECT(_, false):
             break
         default:
-            print("Error in Content()")
+            print("Syntaxerror in Content()")
         }
         
         return ASTNode(value: Token.ERROR, children: [])
@@ -128,7 +126,7 @@ class Parser{
         case .VALUES(false):
             break
         default:
-            print("Error in VContent()")
+            print("Syntaxerror in VContent()")
         }
         
         return ASTNode(value: Token.ERROR, children: [])
@@ -142,7 +140,7 @@ class Parser{
             let child2 = eat(.SPEC_OBJECT_TYPE_REF("", false))
             return ASTNode(value: Token.TCONTENT, children: [child1, child2])
         default:
-            print("Error in TConent()")
+            print("Syntaxerror in TConent()")
         }
         
         return ASTNode(value: Token.ERROR, children: [])
@@ -157,7 +155,7 @@ class Parser{
             let child3 = eat(.DEFINITION(false))
             return ASTNode(value: Token.AVSCONTENT, children: [child1, child2, child3])
         default:
-            print("Error in AVSCON")
+            print("Syntaxerror in AVSContent()")
         }
         
         return ASTNode(value: Token.ERROR, children: [])
@@ -171,7 +169,7 @@ class Parser{
             let child2 = eat(.ATTRIBUTE_DEFINITION_STRING_REF("", false))
             return ASTNode(value: Token.DCONTENT, children: [child1, child2])
         default:
-            print("Error in DCONTENT")
+            print("Syntaxerror in DContent()")
         }
         
         return ASTNode(value: Token.ERROR, children: [])
@@ -199,7 +197,8 @@ class Parser{
 let tokens = [Token.SPEC_OBJECT("_fdb3", true), Token.VALUES(true), Token.ATTRIBUTE_VALUE_STRING("headline", true), Token.DEFINITION(true), Token.ATTRIBUTE_DEFINITION_STRING_REF("_7257", true), Token.ATTRIBUTE_DEFINITION_STRING_REF("", false), Token.DEFINITION(false), Token.ATTRIBUTE_VALUE_STRING("", false), Token.ATTRIBUTE_VALUE_STRING("", true), Token.DEFINITION(true), Token.ATTRIBUTE_DEFINITION_STRING_REF("_15e0", true), Token.ATTRIBUTE_DEFINITION_STRING_REF("", false), Token.DEFINITION(false), Token.ATTRIBUTE_VALUE_STRING("", false), Token.VALUES(false), Token.TYPE(true), Token.SPEC_OBJECT_TYPE_REF("_4638", true), Token.SPEC_OBJECT_TYPE_REF("", false), Token.TYPE(false), Token.SPEC_OBJECT("", false)]
 let lexer = Lexer(tokens: tokens)
 let parser = Parser(lexer: lexer)
-parser.parse()
+let ast = parser.parse()
+print(ast)
 
 /*
 Input:
@@ -225,5 +224,4 @@ Input:
 /*
 Output:
 ASTNode(value: __lldb_expr_88.Token.ROOT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.SPEC_OBJECT("_fdb3", true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.CONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.VALUES(true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.VCONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_VALUE_STRING("headline", true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.AVSCONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.DEFINITION(true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.DCONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_DEFINITION_STRING_REF("_7257", true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_DEFINITION_STRING_REF("", false), children: [])]), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.DEFINITION(false), children: [])]), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_VALUE_STRING("", false), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.VCONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_VALUE_STRING("", true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.AVSCONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.DEFINITION(true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.DCONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_DEFINITION_STRING_REF("_15e0", true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_DEFINITION_STRING_REF("", false), children: [])]), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.DEFINITION(false), children: [])]), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ATTRIBUTE_VALUE_STRING("", false), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.ERROR, children: [])])]), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.VALUES(false), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.TYPE(true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.TCONTENT, children: [__lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.SPEC_OBJECT_TYPE_REF("_4638", true), children: []), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.SPEC_OBJECT_TYPE_REF("", false), children: [])]), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.TYPE(false), children: [])]), __lldb_expr_88.ASTNode(value: __lldb_expr_88.Token.SPEC_OBJECT("", false), children: [])])
-
  */
