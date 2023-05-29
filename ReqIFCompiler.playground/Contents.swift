@@ -3,20 +3,20 @@ import UIKit
 var greeting = "Hello, playground"
 
 enum Token{
-    case ROOT //Nichtterminal
-    case CONTENT //Nichtterminal
-    case VCONTENT //Nichtterminal
-    case AVSCONTENT //Nichtterminal
-    case DCONTENT //Nichtterminal
-    case TCONTENT //Nichtterminal
-    case ERROR //Nichtterminal
-    case SPEC_OBJECT(String, Bool) //SPEC_OBJECT(Value, isOpeningTag)
-    case SPEC_OBJECT_TYPE_REF(String, Bool)
-    case VALUES(Bool)
-    case TYPE(Bool)
-    case ATTRIBUTE_VALUE_STRING(String, Bool)
-    case DEFINITION(Bool)
-    case ATTRIBUTE_DEFINITION_STRING_REF(String, Bool)
+    case ROOT //Nonterminal
+    case CONTENT //Nonterminal
+    case VCONTENT //Nonterminal
+    case AVSCONTENT //Nonterminal
+    case DCONTENT //Nonterminal
+    case TCONTENT //Nonterminal
+    case ERROR //Nonterminal
+    case SPEC_OBJECT(String, Bool) //SPEC_OBJECT(value, isOpeningTag)
+    case SPEC_OBJECT_TYPE_REF(String, Bool) //SPEC_OBJECT_TYPE_REF(Value, isOpeningTag)
+    case VALUES(Bool) //VALUES(isOpeningTag)
+    case TYPE(Bool) //TYPE(isOpeningTag)
+    case ATTRIBUTE_VALUE_STRING(String, Bool) //ATTRIBUTE_VALUE_STRING(value,isOpeningTag)
+    case DEFINITION(Bool) //DEFINITION(isOpeningTag)
+    case ATTRIBUTE_DEFINITION_STRING_REF(String, Bool) //ATTRIBUTE_DEFINITION_STRING_REF(value,isOpeningTag)
 }
 
 struct ASTNode{
