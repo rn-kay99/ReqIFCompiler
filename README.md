@@ -2,13 +2,14 @@
 
 ## Funktionen
 - Implementierung eines Recursive-Descent-Parsers in Swift.
-- Analyse von Eingaben gemäß anhand unten beschriebenen Grammatik.
+- Analyse von Eingaben anhand unten beschriebener Grammatik.
 - Erzeugung eines abstrakten Syntaxbaums (AST) als Ergebnis der Analyse.
 
 ## Was ist ReqIF?
 Das ReqIF-Format (Requirements Interchange Format) ist ein standardisiertes Dateiformat für den Austausch von Anforderungen zwischen verschiedenen Anforderungsmanagement-Tools. Es wurde vom Object Management Group (OMG) entwickelt und ist in der Spezifikation [Requirements Interchange Format (ReqIF)](https://www.omg.org/spec/ReqIF/1.2/PDF) definiert.
 
 ## ReqIF Grammatik
+Es handelt sich dabei um eine stark vereinfachte Variante des ReqIF Formats.
 ```
 S → <spec_object> CONTENT </spec_object>
 CONTENT → <values> VCONTENT </values> <type> TCONTENT </type>
@@ -17,6 +18,18 @@ TCONTENT → <spec-object-ref-type> </spec-object-ref-type>
 AVSCONTENT → <definition> DCONTENT </definition>
 DCONTENT → <attribute-definition-string-ref> </attribute-definition-string-ref>
 ```
+
+## FIRST & FOLLOW Mengen
+Die nachfolgende Tabelle gibt die FIRST & FOLLOW Mengen für die oben beschriebene Grammatik an.
+
+|              | ε-ableitbar? | FIRST                         | FOLLOW  |
+|--------------|--------------|-------------------------------|----------|
+| S            | Nein         | ```<spec_object>```           | ```$```   |
+| CONTENT      | Nein         | ```<values>```                | ```</spec_object>```   |
+| VCONTENT     | Nein         | ```<attribute-value-string>```| ```<attribute-value-string>, </values>```   |
+| TCONTENT     | Nein         | ```<spec-object-ref-type>```  | ```</type>```   |
+| AVSCONTENT   | Nein         | ```<definition>```            | ```</attribute-value-string>```   |
+| DCONTENT     | Nein         | ```<attribute-definition-string-ref>```   | ```</definition>```   |
 
 ## Beispiel
 
