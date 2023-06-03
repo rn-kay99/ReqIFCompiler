@@ -21,6 +21,7 @@ DCONTENT → <attribute-definition-string-ref> </attribute-definition-string-ref
 
 ## FIRST & FOLLOW Mengen
 Die nachfolgende Tabelle gibt die FIRST & FOLLOW Mengen für die oben beschriebene Grammatik an.
+Dabei sind **S**, **CONTENT**, **VCONTENT**, **TCONTENT**, **AVSCONTENT**, **DCONTENT** die Nichtterminale.
 
 |              | ε-ableitbar? | FIRST                         | FOLLOW  |
 |--------------|--------------|-------------------------------|----------|
